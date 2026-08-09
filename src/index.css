@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --canvas: #ffffff;
+  --surface-soft: #f4f4f5; /* zinc-100 */
+  --ink-deep: #09090b; /* zinc-950 */
+  --ink: #27272a; /* zinc-800 */
+  --charcoal: #52525b; /* zinc-600 */
+  --slate: #71717a; /* zinc-500 */
+  --hairline-soft: #e4e4e7; /* zinc-200 */
+  --hairline: #d4d4d8; /* zinc-300 */
+  --ink-button: #09090b; /* zinc-950 */
+  --on-ink-button: #ffffff;
+  
+  --primary: #0070f3; /* Electric Blue / Vercel Blue */
+  --primary-deep: #0051a8;
+  --primary-soft: #e0f2fe;
+
+  --shadow-diffusion: 0 20px 40px -15px rgba(0,0,0,0.05);
+}
+
+.dark {
+  --canvas: #09090b; /* zinc-950 */
+  --surface-soft: #18181b; /* zinc-900 */
+  --ink-deep: #ffffff;
+  --ink: #e4e4e7; /* zinc-200 */
+  --charcoal: #a1a1aa; /* zinc-400 */
+  --slate: #71717a; /* zinc-500 */
+  --hairline-soft: #27272a; /* zinc-800 */
+  --hairline: #3f3f46; /* zinc-700 */
+  --ink-button: #ffffff;
+  --on-ink-button: #09090b;
+  
+  --primary: #0070f3;
+  --primary-deep: #0051a8;
+  --primary-soft: #0c1b33;
+
+  --shadow-diffusion: 0 20px 40px -15px rgba(0,0,0,0.4);
+}
+
+@theme {
+  --font-sans: 'Outfit', sans-serif;
+  
+  --color-primary: var(--primary);
+  --color-primary-deep: var(--primary-deep);
+  --color-primary-soft: var(--primary-soft);
+  --color-ink-button: var(--ink-button);
+  --color-on-ink-button: var(--on-ink-button);
+  --color-canvas: var(--canvas);
+  --color-surface-soft: var(--surface-soft);
+  --color-ink-deep: var(--ink-deep);
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-slate: var(--slate);
+  --color-hairline: var(--hairline);
+  --color-hairline-soft: var(--hairline-soft);
+  
+  --shadow-diffusion: var(--shadow-diffusion);
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 16px;
+  --radius-xxl: 24px;
+  --radius-xxxl: 32px;
+  --radius-bento: 40px;
+  --radius-feature: 40px;
+  --radius-full: 100px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-canvas);
+  color: var(--color-ink-deep);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
