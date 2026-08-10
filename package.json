@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm run backend\" \"npm run tts\"",
+    "dev": "concurrently \"vite\" \"npm run backend\" \"npm run tts\" \"npm run odl-hybrid\"",
     "backend": "cd backend && npm run dev",
     "tts": "uvx --python 3.11 pocket-tts serve --port 8000",
+    "odl-hybrid": "uvx --python 3.11 --with \"opendataloader-pdf[hybrid]\" opendataloader-pdf-hybrid --port 5002 --enrich-formula --enrich-picture-description --force-ocr",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"

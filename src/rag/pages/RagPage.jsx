@@ -717,7 +717,11 @@ export default function RagPage() {
                                   ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4 space-y-2" {...props} />,
                                   ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-4 space-y-2" {...props} />,
                                   h3: ({node, ...props}) => <h3 className="text-lg font-bold mt-6 mb-3" {...props} />,
-                                  h4: ({node, ...props}) => <h4 className="text-base font-bold mt-4 mb-2" {...props} />
+                                  h4: ({node, ...props}) => <h4 className="text-base font-bold mt-4 mb-2" {...props} />,
+                                  table: ({node, ...props}) => <div className="overflow-x-auto my-4 rounded-lg border border-hairline-soft"><table className="w-full text-left border-collapse text-[13px]" {...props} /></div>,
+                                  thead: ({node, ...props}) => <thead className="bg-surface-soft text-ink-deep border-b border-hairline-soft" {...props} />,
+                                  th: ({node, ...props}) => <th className="px-4 py-3 font-semibold border-r border-hairline-soft last:border-r-0" {...props} />,
+                                  td: ({node, ...props}) => <td className="px-4 py-3 border-r border-t border-hairline-soft last:border-r-0 text-charcoal" {...props} />
                                 }}
                               >
                                 {msg.content.replace(/\[EXPORT:PDF\]/g, '').replace(/\[EXPORT:DOCX\]/g, '').replace(/\[(\d+)\]/g, '[$1](#cite-$1)').trim()}
@@ -904,7 +908,7 @@ export default function RagPage() {
               </div>
               <div className="p-6 flex-1 overflow-y-auto">
                 <div className="text-[12px] font-bold text-primary bg-primary-soft px-3 py-1.5 rounded-full inline-block mb-4">
-                  Match Score: {selectedCitation.similarity ? (selectedCitation.similarity * 100).toFixed(1) : 100.0}%
+                  Match Relevance: {selectedCitation.similarity ? Math.min(100, Math.max(0, (selectedCitation.similarity - 0.5) * 200)).toFixed(0) : 100}%
                 </div>
                 <div className="p-5 bg-surface-soft rounded-2xl text-[14px] leading-relaxed text-ink-deep font-medium border border-primary/30 bg-primary/5 dark:bg-yellow-500/10 dark:border-yellow-500/30 break-words whitespace-pre-wrap">
                   "{selectedCitation.text}"

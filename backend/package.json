@@ -12,6 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@opendataloader/pdf": "^2.5.0",
     "@supabase/supabase-js": "^2.112.2",
     "cors": "^2.8.6",
     "docx": "^9.7.1",
