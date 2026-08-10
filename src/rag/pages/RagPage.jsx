@@ -26,20 +26,40 @@ export default function RagPage() {
   const [recording, setRecording] = useState(false);
   const [audioLevels, setAudioLevels] = useState([10, 10, 10, 10, 10]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [ttsLoading, setTtsLoading] = useState(null);
   
   const messagesEndRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const animFrameRef = useRef(null);
 
-  const speak = useCallback((text) => {
-    // Strip out exports/citations brackets for cleaner speech
-    const cleanText = text.replace(/\[EXPORT:[A-Z]+\]/g, '').replace(/\[\d+\]/g, '').trim();
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = "en-US";
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    window.speechSynthesis.speak(utterance);
+  const speak = useCallback(async (text, messageIndex) => {
+    try {
+      setTtsLoading(messageIndex);
+      // Strip out exports/citations brackets for cleaner speech
+      const cleanText = text.replace(/\[EXPORT:[A-Z]+\]/g, '').replace(/\[\d+\]/g, '').trim();
+      
+      const formData = new FormData();
+      formData.append('text', cleanText);
+      formData.append('voice_url', 'alba');
+      
+      const response = await fetch('/tts-api/tts', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) throw new Error('TTS Failed');
+      
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.play();
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to generate AI voice');
+    } finally {
+      setTtsLoading(null);
+    }
   }, []);
 
   useEffect(() => {
@@ -708,14 +728,17 @@ export default function RagPage() {
                         {msg.role === 'assistant' && (
                           <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-1 ml-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                             <button 
-                              onClick={() => {
-                                const utterance = new SpeechSynthesisUtterance(msg.content.replace(/\[EXPORT:[A-Z]+\]/g, '').replace(/\[\d+\]/g, '').trim());
-                                window.speechSynthesis.speak(utterance);
-                              }}
-                              className="text-slate hover:text-primary transition-colors flex items-center gap-1.5 text-[11px] font-medium"
+                              onClick={() => speak(msg.content, i)}
+                              className={`transition-colors flex items-center gap-1.5 text-[11px] font-medium ${ttsLoading === i ? 'text-primary' : 'text-slate hover:text-primary'}`}
                               title="Read aloud"
+                              disabled={ttsLoading === i}
                             >
-                              <SpeakerHigh size={14} weight="bold" /> Speaker
+                              {ttsLoading === i ? (
+                                <CircleNotch weight="bold" size={14} className="animate-spin" />
+                              ) : (
+                                <SpeakerHigh weight="fill" size={14} />
+                              )}
+                              <span className="hidden sm:inline">{ttsLoading === i ? 'Generating...' : 'Speaker'}</span>
                             </button>
                             <button 
                               onClick={() => {
